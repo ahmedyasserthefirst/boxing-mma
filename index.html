@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0d12">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>🥊 خطة تدريب الملاكمة في البيت</title>
+<style>
+  :root{
+    --bg:#0b0d12; --bg2:#141821; --card:#181d27; --card2:#1f2530;
+    --red:#ff2e4d; --red2:#ff6b3d; --blue:#36d0ff; --green:#5be37a;
+    --gold:#ffcf4d; --text:#f3f5f8; --muted:#8b94a3; --line:#2a313d;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; font-family:-apple-system,"Segoe UI",Tahoma,sans-serif;
+    background:radial-gradient(1200px 600px at 50% -10%,#1b2230 0%,var(--bg) 60%);
+    color:var(--text); line-height:1.7; padding:0 0 40px; overflow-x:hidden;}
+
+  .hero{position:relative; padding:46px 18px 26px; text-align:center; overflow:hidden;}
+  .hero::before{content:""; position:absolute; inset:-40% -20% auto -20%; height:340px;
+    background:radial-gradient(circle at 50% 0%,rgba(255,46,77,.35),transparent 70%); filter:blur(8px);}
+  .glove{width:120px; height:120px; margin:0 auto 10px; display:block;
+    animation:bob 1.6s ease-in-out infinite; filter:drop-shadow(0 8px 18px rgba(255,46,77,.5));}
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(-4deg);}50%{transform:translateY(-12px) rotate(4deg);}}
+  .hero h1{font-size:1.9rem; margin:6px 0 4px; letter-spacing:.5px;
+    background:linear-gradient(90deg,var(--red),var(--gold)); -webkit-background-clip:text; background-clip:text; color:transparent;
+    animation:shine 3s linear infinite; background-size:200% auto;}
+  @keyframes shine{to{background-position:200% center;}}
+  .hero p{color:var(--muted); font-size:.95rem; margin:0 auto; max-width:420px;}
+  .pulse{display:inline-block; margin-top:14px; padding:9px 18px; border-radius:999px;
+    background:linear-gradient(90deg,var(--red),var(--red2)); color:#fff; font-weight:700; font-size:.85rem;
+    box-shadow:0 6px 20px rgba(255,46,77,.4); animation:pulse 2s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{transform:scale(1); box-shadow:0 6px 20px rgba(255,46,77,.4);}50%{transform:scale(1.05); box-shadow:0 10px 28px rgba(255,107,61,.55);}}
+
+  .wrap{max-width:640px; margin:0 auto; padding:0 14px;}
+  .card{background:linear-gradient(180deg,var(--card),var(--bg2)); border:1px solid var(--line);
+    border-radius:18px; padding:16px; margin:16px 0;
+    opacity:0; transform:translateY(26px); transition:opacity .7s ease, transform .7s ease;
+    box-shadow:0 10px 30px rgba(0,0,0,.35);}
+  .card.show{opacity:1; transform:none;}
+  .card h2{font-size:1.15rem; margin:0 0 12px; display:flex; align-items:center; gap:9px;
+    border-bottom:2px solid var(--red); padding-bottom:8px;}
+  .card h2 .ic{font-size:1.3rem; filter:drop-shadow(0 2px 6px rgba(255,46,77,.6));}
+
+  .day{display:flex; align-items:center; gap:12px; padding:11px 12px; margin-bottom:9px;
+    border-radius:13px; background:var(--card2); border:1px solid var(--line);
+    transition:transform .25s ease, background .25s ease; animation:slideIn .5s ease both;}
+  .day:active{transform:scale(.98);}
+  @keyframes slideIn{from{opacity:0; transform:translateX(-20px);}to{opacity:1; transform:none;}}
+  .day .dot{width:14px; height:14px; border-radius:50%; flex:none; box-shadow:0 0 10px currentColor;}
+  .day .nm{flex:1; font-weight:700;}
+  .day .act{font-size:.82rem; color:var(--muted);}
+  .day .tm{font-size:.78rem; font-weight:700; padding:3px 9px; border-radius:999px; background:#0d1119; color:var(--blue);}
+  .home-c{color:var(--green);} .home-c .dot{background:var(--green);}
+  .rest-c{color:var(--muted);} .rest-c .dot{background:var(--muted);}
+
+  .step{display:flex; gap:13px; padding:11px 0; border-bottom:1px dashed var(--line);}
+  .step:last-child{border-bottom:none;}
+  .step .n{flex:none; width:34px; height:34px; border-radius:50%; display:grid; place-items:center;
+    background:linear-gradient(135deg,var(--red),var(--red2)); color:#fff; font-weight:800; font-size:.95rem;
+    box-shadow:0 4px 14px rgba(255,46,77,.4); animation:pop .5s ease both;}
+  @keyframes pop{from{transform:scale(0);}to{transform:scale(1);}}
+  .step .b b{color:var(--green);}
+  .step .b{font-size:.92rem;}
+
+  a.vid{position:relative; display:block; text-decoration:none; color:var(--text);
+    background:var(--card2); border:1px solid var(--line); border-radius:13px; padding:12px 14px 12px 46px;
+    margin-bottom:9px; overflow:hidden; transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;}
+  a.vid:hover,a.vid:active{transform:translateX(-4px); border-color:var(--red); box-shadow:-6px 0 18px rgba(255,46,77,.25);}
+  a.vid .num{position:absolute; right:12px; top:50%; transform:translateY(-50%);
+    width:24px; height:24px; background:var(--red); color:#fff; border-radius:50%; display:grid; place-items:center; font-size:.8rem; font-weight:800;}
+  a.vid .t{font-weight:700; font-size:.92rem;}
+  a.vid .s{display:block; color:var(--muted); font-size:.78rem; margin-top:2px;}
+
+  .chk{display:flex; align-items:center; gap:12px; padding:11px 12px; margin-bottom:8px; border-radius:12px;
+    background:var(--card2); border:1px solid var(--line); cursor:pointer; transition:background .25s ease;}
+  .chk input{display:none;}
+  .chk .box{width:26px; height:26px; border-radius:8px; border:2px solid var(--muted); flex:none; position:relative; transition:all .25s ease;}
+  .chk input:checked + .box{background:var(--green); border-color:var(--green); animation:tick .35s ease;}
+  @keyframes tick{0%{transform:scale(.6);}60%{transform:scale(1.15);}100%{transform:scale(1);}}
+  .chk .box::after{content:""; position:absolute; left:8px; top:3px; width:6px; height:12px;
+    border:solid #0b0d12; border-width:0 3px 3px 0; transform:rotate(45deg); opacity:0; transition:opacity .2s;}
+  .chk input:checked + .box::after{opacity:1;}
+  .chk span{font-size:.92rem; transition:color .25s ease;}
+  .chk.done{opacity:.55;} .chk.done span{text-decoration:line-through;}
+
+  .tip{background:#101822; border-right:4px solid var(--red); padding:9px 13px; border-radius:9px; margin-bottom:8px; font-size:.88rem; animation:fade .6s ease both;}
+  @keyframes fade{from{opacity:0;}to{opacity:1;}}
+
+  .progress{height:10px; border-radius:999px; background:#0d1119; overflow:hidden; margin:6px 0 0; border:1px solid var(--line);}
+  .progress > i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--green),var(--blue)); transition:width .6s ease;}
+  .pg-text{font-size:.78rem; color:var(--muted); margin-top:6px; text-align:center;}
+
+  footer{text-align:center; color:var(--muted); font-size:.72rem; margin-top:24px; padding:0 14px;}
+</style>
+<noscript><style>.card{opacity:1 !important; transform:none !important;}</style></noscript>
+</head>
+<body>
+
+<header class="hero">
+  <svg class="glove" viewBox="0 0 100 100" aria-hidden="true">
+    <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff2e4d"/><stop offset="1" stop-color="#ff6b3d"/></linearGradient></defs>
+    <path d="M20 40c0-10 8-16 18-16h14c12 0 22 9 22 22v18c0 12-9 20-22 20H38c-10 0-18-8-18-20V40z" fill="url(#g)"/>
+    <rect x="46" y="60" width="34" height="16" rx="6" fill="#2a313d"/>
+    <path d="M30 44c8 6 20 6 28 0" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity=".7"/>
+  </svg>
+  <h1>🥊 خطة تدريب الملاكمة في البيت</h1>
+  <p>أحمد ياسر — تدريب من غير أي معدات، مسجل كل يوم 💪</p>
+  <div class="pulse">ابدأ النهاردة ولا تنتظر بكرة!</div>
+</header>
+
+<div class="wrap">
+
+  <section class="card" id="sched">
+    <h2><span class="ic">📅</span> الجدول الأسبوعي (كله بيت)</h2>
+    <div class="day home-c" style="animation-delay:.05s"><span class="dot"></span><span class="nm">السبت</span><span class="act">تمرين بيت 🏠</span><span class="tm">٧ م</span></div>
+    <div class="day home-c" style="animation-delay:.1s"><span class="dot"></span><span class="nm">الأحد</span><span class="act">تمرين بيت 🏠</span><span class="tm">٧ م</span></div>
+    <div class="day home-c" style="animation-delay:.15s"><span class="dot"></span><span class="nm">الإثنين</span><span class="act">تمرين بيت 🏠</span><span class="tm">٧ م</span></div>
+    <div class="day home-c" style="animation-delay:.2s"><span class="dot"></span><span class="nm">الثلاثاء</span><span class="act">تمرين بيت 🏠</span><span class="tm">٧ م</span></div>
+    <div class="day home-c" style="animation-delay:.25s"><span class="dot"></span><span class="nm">الأربعاء</span><span class="act">تمرين بيت 🏠</span><span class="tm">٧ م</span></div>
+    <div class="day rest-c" style="animation-delay:.3s"><span class="dot"></span><span class="nm">الخميس</span><span class="act">راحة 😴</span><span class="tm">—</span></div>
+    <div class="day rest-c" style="animation-delay:.35s"><span class="dot"></span><span class="nm">الجمعة</span><span class="act">راحة 😴</span><span class="tm">—</span></div>
+  </section>
+
+  <section class="card" id="work">
+    <h2><span class="ic">🏋️</span> تمارين البيت (٣٠ دقيقة)</h2>
+    <div class="step"><div class="n">١</div><div class="b"><b>إحماء ٥ د:</b> جري في المكان ٢ د — دوّر كتفك ١ د — سكوات خفيف ٢ د</div></div>
+    <div class="step"><div class="n">٢</div><div class="b"><b>الوقفة ٥ د:</b> رجل قدام ورا، ركبتين مثنيتين، الإيدين قدام وشك (قدام المراية)</div></div>
+    <div class="step"><div class="n">٣</div><div class="b"><b>ظل ١٠ د:</b> جاب×٢٠ — كروس×٢٠ — جاب+كروس×١٥ — حركة قدمين وأنت بتضرب</div></div>
+    <div class="step"><div class="n">٤</div><div class="b"><b>لياقة ٨ د:</b> ضغط ٣×١٠ — بطن ٣×١٥ — قفز مكان ٣×١ د — سكوات ٣×١٥</div></div>
+    <div class="step"><div class="n">٥</div><div class="b"><b>تهدية ٢ د:</b> تمدد ذراعين ورجلين بهدوء</div></div>
+    <div class="tip" style="margin-top:10px">💡 شغّل أول فيديو وتدرب معاه في خطوة ٣.</div>
+  </section>
+
+  <section class="card" id="vid">
+    <h2><span class="ic">🎥</span> فيديوهات التعلم (بالترتيب)</h2>
+    <a class="vid" target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=D8DouKeOkfI"><span class="num">١</span><span class="t">كورس الملاكمة الكامل للمبتدئين</span><span class="s">أشهر مدرب أولمبي — شرح الوقفة والضربات والتركيبات</span></a>
+    <a class="vid" target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=ArQ50PXMCj4"><span class="num">٢</span><span class="t">إزاي تضرب الجاب صح</span><span class="s">أهم ضربة: اليد الأمامية السريعة</span></a>
+    <a class="vid" target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=CMS_ni5lEs4"><span class="num">٣</span><span class="t">إزاي تلف إيدك بالباندات</span><span class="s">مهم عشان متجرحش (لو اشتريت كيس)</span></a>
+    <a class="vid" target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=YXkN2QdzaqY"><span class="num">٤</span><span class="t">٦ غلطات بيعملها المبتدئين</span><span class="s">اتجنبها عشان متتعورش ولا تضيع وقت</span></a>
+    <a class="vid" target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=kKDHdsVN0b8"><span class="num">٥</span><span class="t">أساسيات الملاكمة في البيت</span><span class="s">وقفة وتمرين من غير معدات</span></a>
+    <a class="vid" target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=7CZ5I-PZjEg"><span class="num">٦</span><span class="t">تمرين ملاكمة في البيت من غير أدوات</span><span class="s">تدريب كامل تقدر تعمله في الأوضة</span></a>
+    <a class="vid" target="_blank" rel="noopener" href="https://expertboxing.com/the-beginners-guide-to-boxing"><span class="num">٧</span><span class="t">دليل المبتدئين الشامل</span><span class="s">شرح نظري مفصل خطوة بخطوة</span></a>
+    <a class="vid" target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=fa_5UmBqCD8"><span class="num">٨</span><span class="t">سلسلة تعليم الملاكمة (الدرس الأول)</span><span class="s">الوقفة الصحيحة والتحركات بالعربي</span></a>
+  </section>
+
+  <section class="card" id="tasks">
+    <h2><span class="ic">✅</span> مهام الأسبوع (اضغط عشان تسجل)</h2>
+    <label class="chk"><input type="checkbox" id="d1" autocomplete="off"><span class="box"></span><span>السبت — تمرين بيت</span></label>
+    <label class="chk"><input type="checkbox" id="d2" autocomplete="off"><span class="box"></span><span>الأحد — تمرين بيت</span></label>
+    <label class="chk"><input type="checkbox" id="d3" autocomplete="off"><span class="box"></span><span>الإثنين — تمرين بيت</span></label>
+    <label class="chk"><input type="checkbox" id="d4" autocomplete="off"><span class="box"></span><span>الثلاثاء — تمرين بيت</span></label>
+    <label class="chk"><input type="checkbox" id="d5" autocomplete="off"><span class="box"></span><span>الأربعاء — تمرين بيت</span></label>
+    <label class="chk"><input type="checkbox" id="d6" autocomplete="off"><span class="box"></span><span>الخميس — راحة</span></label>
+    <label class="chk"><input type="checkbox" id="d7" autocomplete="off"><span class="box"></span><span>الجمعة — راحة</span></label>
+    <div class="progress"><i id="bar"></i></div>
+    <div class="pg-text" id="pgtext">٠٪ مكتمل</div>
+  </section>
+
+  <section class="card" id="tips">
+    <h2><span class="ic">⚠️</span> نصائح أمان</h2>
+    <div class="tip">• بلاش تضرب حاجة صلبة من غير قفازات — هتجرح إيدك ومعصمك.</div>
+    <div class="tip">• لو اشتريت كيس: لف إيدك بالباندات قبل أي ضرب.</div>
+    <div class="tip">• دفّي جسمك ٥ دقايق قبل التمرين.</div>
+    <div class="tip">• البيت بيبدأ بأساسيات — لما تجهز نروح استاد المنصورة.</div>
+    <div class="tip">• أي مشكلة صحية (ركبة/ضغط) → كشف طبي أول.</div>
+  </section>
+
+  <footer>صفحة تدريب شخصية — اتظبطت بمساعدة هيرمس 🤖<br>اضغط على الرابط واختار "أضف للشاشة الرئيسية" عشان يبقى زي أبليكيشن</footer>
+</div>
+
+<script>
+  var arNum=function(s){return String(s).replace(/\d/g,function(d){return '٠١٢٣٤٥٦٧٨٩'[d];});};
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('show');});},{threshold:.12});
+  document.querySelectorAll('.card').forEach(function(c){io.observe(c);});
+
+  var ids=['d1','d2','d3','d4','d5','d6','d7'],bar=document.getElementById('bar'),pg=document.getElementById('pgtext');
+  function upd(){var n=0;ids.forEach(function(i){if(localStorage.getItem('bx_'+i)==='1')n++;});
+    var p=Math.round(n/ids.length*100);bar.style.width=p+'%';pg.textContent=arNum(p)+'٪ مكتمل';}
+  ids.forEach(function(i){var c=document.getElementById(i),l=c.closest('.chk');
+    c.checked=localStorage.getItem('bx_'+i)==='1';if(c.checked)l.classList.add('done');
+    c.onchange=function(){localStorage.setItem('bx_'+i,c.checked?'1':'0');l.classList.toggle('done',c.checked);upd();};});
+  upd();
+</script>
+</body>
+</html>
