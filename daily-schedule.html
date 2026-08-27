@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0d12">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>🗓️ الجدول اليومي — أحمد ياسر</title>
+<style>
+  :root{
+    --bg:#0b0d12; --bg2:#141821; --card:#181d27; --card2:#1f2530;
+    --red:#ff2e4d; --red2:#ff6b3d; --blue:#36d0ff; --green:#5be37a;
+    --gold:#ffcf4d; --purple:#b07cff; --text:#f3f5f8; --muted:#8b94a3; --line:#2a313d;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; font-family:-apple-system,"Segoe UI",Tahoma,sans-serif;
+    background:radial-gradient(1200px 600px at 50% -10%,#1b2230 0%,var(--bg) 60%);
+    color:var(--text); line-height:1.7; padding:0 0 40px; overflow-x:hidden;}
+
+  .hero{position:relative; padding:40px 18px 22px; text-align:center; overflow:hidden;}
+  .hero::before{content:""; position:absolute; inset:-40% -20% auto -20%; height:340px;
+    background:radial-gradient(circle at 50% 0%,rgba(255,46,77,.35),transparent 70%); filter:blur(8px);}
+  .hero h1{font-size:1.85rem; margin:6px 0 4px; letter-spacing:.5px;
+    background:linear-gradient(90deg,var(--red),var(--gold)); -webkit-background-clip:text; background-clip:text; color:transparent;
+    animation:shine 3s linear infinite; background-size:200% auto;}
+  @keyframes shine{to{background-position:200% center;}}
+  .hero p{color:var(--muted); font-size:.92rem; margin:0 auto; max-width:440px;}
+  .pulse{display:inline-block; margin-top:14px; padding:9px 18px; border-radius:999px;
+    background:linear-gradient(90deg,var(--red),var(--red2)); color:#fff; font-weight:700; font-size:.85rem;
+    box-shadow:0 6px 20px rgba(255,46,77,.4); animation:pulse 2s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{transform:scale(1); box-shadow:0 6px 20px rgba(255,46,77,.4);}50%{transform:scale(1.05); box-shadow:0 10px 28px rgba(255,107,61,.55);}}
+
+  /* ===== ANIMATION SCENE ===== */
+  .scene{position:relative; width:100%; max-width:520px; margin:18px auto 6px; aspect-ratio:16/9;
+    background:linear-gradient(180deg,#10131b,#0b0d12); border:1px solid var(--line); border-radius:16px; overflow:hidden;}
+  .scene .floor{position:absolute; left:0; right:0; bottom:0; height:38%;
+    background:linear-gradient(180deg,rgba(54,208,255,.06),rgba(54,208,255,.02)); border-top:1px solid rgba(54,208,255,.15);}
+  .scene svg{position:absolute; inset:0; width:100%; height:100%;}
+
+  /* boxer figures */
+  .boxer{transform-origin:center; }
+  .boxer.left{animation:bobL 1.1s ease-in-out infinite;}
+  .boxer.right{animation:bobR 1.1s ease-in-out infinite;}
+  @keyframes bobL{0%,100%{transform:translate(0,0)}50%{transform:translate(4px,-3px)}}
+  @keyframes bobR{0%,100%{transform:translate(0,0)}50%{transform:translate(-4px,-3px)}}
+  .punch{transform-origin:bottom right; animation:punch 1.1s ease-in-out infinite;}
+  .punchR{transform-origin:bottom left; animation:punchR 1.1s ease-in-out infinite;}
+  @keyframes punch{0%,60%,100%{transform:rotate(0)}75%{transform:rotate(-26deg)}}
+  @keyframes punchR{0%,60%,100%{transform:rotate(0)}75%{transform:rotate(26deg)}}
+  .spark{opacity:0; animation:spark 1.1s ease-in-out infinite;}
+  @keyframes spark{0%,72%,100%{opacity:0; transform:scale(.4)}78%{opacity:1; transform:scale(1.2)}86%{opacity:0; transform:scale(.6)}}
+
+  /* reader glow */
+  .reader{animation:read 3.2s ease-in-out infinite;}
+  @keyframes read{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+  .halo{transform-origin:center; animation:halo 3.2s ease-in-out infinite;}
+  @keyframes halo{0%,100%{opacity:.25; transform:scale(.95)}50%{opacity:.6; transform:scale(1.05)}}
+
+  /* worker typing */
+  .typist{animation:typ 0.5s steps(2) infinite;}
+  @keyframes typ{0%{opacity:1}50%{opacity:.55}100%{opacity:1}}
+  .caret{animation:caret 0.8s steps(1) infinite;}
+  @keyframes caret{0%,49%{opacity:1}50%,100%{opacity:0}}
+
+  .scene-tabs{display:flex; gap:6px; justify-content:center; margin:0 auto 4px; max-width:520px;}
+  .scene-tabs button{flex:1; background:var(--card2); border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:8px 4px; font-size:.78rem; font-weight:700; cursor:pointer; transition:all .2s;}
+  .scene-tabs button.on{color:var(--text); border-color:var(--red); background:#101822; box-shadow:0 0 0 1px var(--red) inset;}
+
+  .wrap{max-width:680px; margin:0 auto; padding:0 14px;}
+  .card{background:linear-gradient(180deg,var(--card),var(--bg2)); border:1px solid var(--line);
+    border-radius:18px; padding:16px; margin:16px 0;
+    opacity:0; transform:translateY(26px); transition:opacity .7s ease, transform .7s ease;
+    box-shadow:0 10px 30px rgba(0,0,0,.35);}
+  .card.show{opacity:1; transform:none;}
+  .card h2{font-size:1.15rem; margin:0 0 12px; display:flex; align-items:center; gap:9px;
+    border-bottom:2px solid var(--red); padding-bottom:8px;}
+  .card h2 .ic{font-size:1.3rem; filter:drop-shadow(0 2px 6px rgba(255,46,77,.6));}
+
+  .pill4{display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-bottom:6px;}
+  .pill4 .p{background:var(--card2); border:1px solid var(--line); border-radius:13px; padding:10px 12px;
+    display:flex; align-items:center; gap:9px; font-size:.86rem;}
+  .pill4 .p .e{font-size:1.3rem;}
+  .pill4 .p b{color:var(--gold);}
+
+  .row{display:flex; align-items:center; gap:10px; padding:10px 12px; margin-bottom:7px;
+    border-radius:13px; background:var(--card2); border:1px solid var(--line);
+    transition:transform .2s ease; animation:slideIn .5s ease both;}
+  .row:active{transform:scale(.99);}
+  @keyframes slideIn{from{opacity:0; transform:translateX(-20px);}to{opacity:1; transform:none;}}
+  .row .bar{width:6px; align-self:stretch; border-radius:6px; flex:none;}
+  .row .tm{flex:none; font-weight:800; font-size:.82rem; color:var(--blue); background:#0d1119; padding:4px 9px; border-radius:999px; min-width:108px; text-align:center;}
+  .row .nm{flex:1; font-weight:700; font-size:.92rem;}
+  .row .du{font-size:.74rem; color:var(--muted); background:#0d1119; padding:3px 9px; border-radius:999px;}
+  .c-box{background:var(--green);} .c-box .bar{background:var(--green);}
+  .c-deut{background:var(--purple);} .c-deut .bar{background:var(--purple);}
+  .c-work{background:var(--blue);} .c-work .bar{background:var(--blue);}
+  .c-quran{background:var(--gold);} .c-quran .bar{background:var(--gold);}
+  .c-rest{background:var(--muted);} .c-rest .bar{background:var(--muted);}
+  .c-rest .nm{color:var(--muted);}
+
+  .tip{background:#101822; border-right:4px solid var(--red); padding:9px 13px; border-radius:9px; margin-bottom:8px; font-size:.85rem; animation:fade .6s ease both;}
+  @keyframes fade{from{opacity:0;}to{opacity:1;}}
+  .tip.info{border-right-color:var(--blue);}
+
+  .chk{display:flex; align-items:center; gap:12px; padding:11px 12px; margin-bottom:8px; border-radius:12px;
+    background:var(--card2); border:1px solid var(--line); cursor:pointer; transition:background .25s ease;}
+  .chk input{display:none;}
+  .chk .box{width:26px; height:26px; border-radius:8px; border:2px solid var(--muted); flex:none; position:relative; transition:all .25s ease;}
+  .chk input:checked + .box{background:var(--green); border-color:var(--green); animation:tick .35s ease;}
+  @keyframes tick{0%{transform:scale(.6);}60%{transform:scale(1.15);}100%{transform:scale(1);}}
+  .chk .box::after{content:""; position:absolute; left:8px; top:3px; width:6px; height:12px;
+    border:solid #0b0d12; border-width:0 3px 3px 0; transform:rotate(45deg); opacity:0; transition:opacity .2s;}
+  .chk input:checked + .box::after{opacity:1;}
+  .chk span{font-size:.92rem; transition:color .25s ease;}
+  .chk.done{opacity:.55;} .chk.done span{text-decoration:line-through;}
+
+  .progress{height:10px; border-radius:999px; background:#0d1119; overflow:hidden; margin:6px 0 0; border:1px solid var(--line);}
+  .progress > i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--green),var(--blue)); transition:width .6s ease;}
+  .pg-text{font-size:.78rem; color:var(--muted); margin-top:6px; text-align:center;}
+
+  footer{text-align:center; color:var(--muted); font-size:.72rem; margin-top:24px; padding:0 14px;}
+</style>
+<noscript><style>.card{opacity:1 !important; transform:none !important;}</style></noscript>
+</head>
+<body>
+
+<header class="hero">
+  <h1>🗓️ الجدول اليومي — أحمد ياسر</h1>
+  <p>أربع محاور كل يوم: بوكسينج 🥊 · ألماني 🇩🇪 · شغل نت 💻 · حفظ قرآن 📖</p>
+  <div class="pulse">من ٥ ص إلى ١٠ م — ابدأ النهاردة!</div>
+</header>
+
+<div class="wrap">
+
+  <!-- ANIMATION -->
+  <section class="card" id="anim">
+    <h2><span class="ic">🎬</span> شوف يومك بعينك</h2>
+    <div class="scene-tabs">
+      <button class="on" data-s="box">🥊 بوكسينج</button>
+      <button data-s="quran">📖 قرآن</button>
+      <button data-s="work">💻 شغل نت</button>
+    </div>
+    <div class="scene">
+      <div class="floor"></div>
+      <!-- BOXING -->
+      <svg id="sc-box" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid meet">
+        <g class="boxer left" transform="translate(96,70)">
+          <circle cx="0" cy="0" r="11" fill="#ffd9a0"/>
+          <rect x="-12" y="11" width="24" height="34" rx="11" fill="var(--red)"/>
+          <g class="punch"><rect x="8" y="16" width="26" height="9" rx="4.5" fill="var(--red2)"/></g>
+          <rect x="-9" y="46" width="8" height="30" rx="4" fill="#2a313d"/>
+          <rect x="1" y="46" width="8" height="30" rx="4" fill="#2a313d"/>
+        </g>
+        <g class="boxer right" transform="translate(224,70)">
+          <circle cx="0" cy="0" r="11" fill="#ffd9a0"/>
+          <rect x="-12" y="11" width="24" height="34" rx="11" fill="var(--blue)"/>
+          <g class="punchR"><rect x="-34" y="16" width="26" height="9" rx="4.5" fill="#36d0ff"/></g>
+          <rect x="-9" y="46" width="8" height="30" rx="4" fill="#2a313d"/>
+          <rect x="1" y="46" width="8" height="30" rx="4" fill="#2a313d"/>
+        </g>
+        <g class="spark" transform="translate(150,60)">
+          <path d="M0 -8 L3 -2 L9 -3 L4 2 L6 9 L0 4 L-6 9 L-4 2 L-9 -3 L-3 -2 Z" fill="var(--gold)"/>
+        </g>
+      </svg>
+      <!-- QURAN -->
+      <svg id="sc-quran" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid meet" style="display:none">
+        <g class="reader" transform="translate(160,95)">
+          <g class="halo"><circle r="44" fill="var(--gold)" opacity=".5"/></g>
+          <circle cx="0" cy="-30" r="13" fill="#ffd9a0"/>
+          <rect x="-15" y="-18" width="30" height="40" rx="14" fill="var(--green)"/>
+          <!-- book -->
+          <path d="M-34 2 L0 -8 L34 2 L34 30 L0 20 L-34 30 Z" fill="#0d1119" stroke="var(--gold)" stroke-width="2"/>
+          <line x1="0" y1="-8" x2="0" y2="20" stroke="var(--gold)" stroke-width="1.5" opacity=".6"/>
+          <g stroke="var(--gold)" stroke-width="1" opacity=".5">
+            <line x1="-26" y1="6" x2="-6" y2="2"/><line x1="-26" y1="12" x2="-6" y2="8"/>
+            <line x1="6" y1="2" x2="26" y2="6"/><line x1="6" y1="8" x2="26" y2="12"/>
+          </g>
+          <rect x="-12" y="22" width="9" height="26" rx="4" fill="#2a313d"/>
+          <rect x="3" y="22" width="9" height="26" rx="4" fill="#2a313d"/>
+        </g>
+      </svg>
+      <!-- WORK -->
+      <svg id="sc-work" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid meet" style="display:none">
+        <g transform="translate(160,70)">
+          <rect x="-60" y="20" width="120" height="70" rx="8" fill="#0d1119" stroke="var(--blue)" stroke-width="2"/>
+          <rect x="-52" y="30" width="104" height="50" rx="4" fill="#101822"/>
+          <text class="typist" x="-46" y="48" fill="var(--green)" font-family="monospace" font-size="9">&gt; npm run build</text>
+          <text class="typist" x="-46" y="62" fill="var(--blue)" font-family="monospace" font-size="9">&gt; deploy --done<tspan class="caret">▋</tspan></text>
+        </g>
+        <g class="boxer" transform="translate(160,18)">
+          <circle cx="0" cy="0" r="12" fill="#ffd9a0"/>
+          <rect x="-13" y="12" width="26" height="36" rx="12" fill="var(--purple)"/>
+          <rect x="-10" y="48" width="8" height="28" rx="4" fill="#2a313d"/>
+          <rect x="2" y="48" width="8" height="28" rx="4" fill="#2a313d"/>
+        </g>
+      </svg>
+    </div>
+    <div class="tip info" id="anim-cap">🥊 اتنين بيتفاوتوا — ظل وضربات سريعة زي التدريب في البيت.</div>
+  </section>
+
+  <section class="card" id="axes">
+    <h2><span class="ic">🎯</span> المحاور الأربعة</h2>
+    <div class="pill4">
+      <div class="p"><span class="e">🥊</span><div>بوكسينج في البيت<br><b>٣٠ دقيقة</b></div></div>
+      <div class="p"><span class="e">🇩🇪</span><div>ألماني (جرماتون)<br><b>حصتين × ٣٠ د</b></div></div>
+      <div class="p"><span class="e">💻</span><div>شغل على النت<br><b>٦ ساعات</b></div></div>
+      <div class="p"><span class="e">📖</span><div>حفظ قرآن<br><b>صفحة واحدة</b></div></div>
+    </div>
+  </section>
+
+  <section class="card" id="sched">
+    <h2><span class="ic">📅</span> الجدول اليومي (٥ ص – ١٠ م)</h2>
+
+    <div class="row c-box"  style="animation-delay:.03s"><span class="bar"></span><span class="tm">٥:٠٠ ص – ٥:٣٠ ص</span><span class="nm">🥊 تدريب بوكسينج (إحماء/وقفة/ظل/لياقة/تهدية)</span><span class="du">٣٠ د</span></div>
+    <div class="row c-quran" style="animation-delay:.06s"><span class="bar"></span><span class="tm">٥:٣٠ ص – ٦:٠٠ ص</span><span class="nm">📖 حفظ صفحة قرآن</span><span class="du">٣٠ د</span></div>
+    <div class="row c-rest" style="animation-delay:.09s"><span class="bar"></span><span class="tm">٦:٠٠ ص – ٦:٣٠ ص</span><span class="nm">🍳 فطار / راحة</span><span class="du">٣٠ د</span></div>
+    <div class="row c-work" style="animation-delay:.12s"><span class="bar"></span><span class="tm">٦:٣٠ ص – ٩:٠٠ ص</span><span class="nm">💻 شغل على النت (فترة ١)</span><span class="du">٢٫٥ س</span></div>
+    <div class="row c-deut" style="animation-delay:.15s"><span class="bar"></span><span class="tm">٩:٠٠ ص – ٩:٣٠ ص</span><span class="nm">🇩🇪 حصة ألماني — جرماتون (١)</span><span class="du">٣٠ د</span></div>
+    <div class="row c-deut" style="animation-delay:.18s"><span class="bar"></span><span class="tm">٩:٣٠ ص – ١٠:٠٠ ص</span><span class="nm">🇩🇪 حصة ألماني — جرماتون (٢)</span><span class="du">٣٠ د</span></div>
+    <div class="row c-work" style="animation-delay:.21s"><span class="bar"></span><span class="tm">١٠:٠٠ ص – ١:٠٠ م</span><span class="nm">💻 شغل على النت (فترة ٢)</span><span class="du">٣ س</span></div>
+    <div class="row c-rest" style="animation-delay:.24s"><span class="bar"></span><span class="tm">١:٠٠ م – ٢:٠٠ م</span><span class="nm">🍲 غدا / راحة</span><span class="du">١ س</span></div>
+    <div class="row c-work" style="animation-delay:.27s"><span class="bar"></span><span class="tm">٢:٠٠ م – ٢:٣٠ م</span><span class="nm">💻 شغل على النت (فترة ٣ — الأخيرة)</span><span class="du">٣٠ د</span></div>
+    <div class="row c-rest" style="animation-delay:.30s"><span class="bar"></span><span class="tm">٢:٣٠ م – ١٠:٠٠ م</span><span class="nm">🌇 راحة / عشا / نوم</span><span class="du">٧٫٥ س</span></div>
+
+    <div class="tip" style="margin-top:12px">📊 الإجمالي: بوكسينج ٣٠د + قرآن ٣٠د + ألماني ٦٠د + شغل نت ٦س = <b>٧٫٥ س</b> من أصل ١٧ س صاحي (الباقي راحة — من غير تضارب).</div>
+  </section>
+
+  <section class="card" id="box">
+    <h2><span class="ic">🥊</span> تمارين البوكسينج (٣٠ دقيقة)</h2>
+    <div class="tip">١) إحماء ٥ د: جري في المكان + تدوير كتف + سكوات خفيف.</div>
+    <div class="tip">٢) الوقفة ٥ د: رجل قدام ورا، ركبتين مثنيتين، الإيدين قدام وشك.</div>
+    <div class="tip">٣) ظل ١٠ د: جاب×٢٠ — كروس×٢٠ — جاب+كروس×١٥ — حركة قدمين.</div>
+    <div class="tip">٤) لياقة ٨ د: ضغط ٣×١٠ — بطن ٣×١٥ — قفز مكان — سكوات ٣×١٥.</div>
+    <div class="tip">٥) تهدية ٢ د: تمدد ذراعين ورجلين بهدوء.</div>
+  </section>
+
+  <section class="card" id="tasks">
+    <h2><span class="ic">✅</span> مهام اليوم (اضغط عشان تسجل)</h2>
+    <label class="chk"><input type="checkbox" id="t1" autocomplete="off"><span class="box"></span><span>🥊 تدريب بوكسينج ٣٠ د</span></label>
+    <label class="chk"><input type="checkbox" id="t2" autocomplete="off"><span class="box"></span><span>📖 حفظ صفحة قرآن</span></label>
+    <label class="chk"><input type="checkbox" id="t3" autocomplete="off"><span class="box"></span><span>🇩🇪 حصة ألماني — جرماتون (١)</span></label>
+    <label class="chk"><input type="checkbox" id="t4" autocomplete="off"><span class="box"></span><span>🇩🇪 حصة ألماني — جرماتون (٢)</span></label>
+    <label class="chk"><input type="checkbox" id="t5" autocomplete="off"><span class="box"></span><span>💻 شغل على النت ٦ ساعات</span></label>
+    <div class="progress"><i id="bar"></i></div>
+    <div class="pg-text" id="pgtext">٠٪ مكتمل</div>
+  </section>
+
+  <section class="card" id="notes">
+    <h2><span class="ic">✅</span> تأكيدات الجدول (مؤكدة من @user)</h2>
+    <div class="tip">✔️ <b>مواعيد النوم/الصحيان:</b> تصحى ٥ ص / تنام ١٠ م = ١٧ س صاحي.</div>
+    <div class="tip">✔️ <b>مدة البوكسينج:</b> ٣٠ دقيقة يومياً.</div>
+    <div class="tip">✔️ <b>مدة حصة الألماني:</b> ٣٠ دقيقة لكل حصة من قناة جرماتون — حصتين = ساعة.</div>
+    <div class="tip info">ℹ️ <b>حفظ القرآن:</b> صفحة واحدة يومياً (~٣٠ دقيقة تقديرية حسب حجم الصفحة).</div>
+  </section>
+
+  <footer>صفحة جدول شخصية — اتظبطت بمساعدة هيرمس 🤖<br>اضغط على الرابط واختار "أضف للشاشة الرئيسية" عشان يبقى زي أبليكيشن</footer>
+</div>
+
+<script>
+  var arNum=function(s){return String(s).replace(/\d/g,function(d){return '٠١٢٣٤٥٦٧٨٩'[d];});};
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('show');});},{threshold:.12});
+  document.querySelectorAll('.card').forEach(function(c){io.observe(c);});
+
+  var ids=['t1','t2','t3','t4','t5'],bar=document.getElementById('bar'),pg=document.getElementById('pgtext');
+  function upd(){var n=0;ids.forEach(function(i){if(localStorage.getItem('dl_'+i)==='1')n++;});
+    var p=Math.round(n/ids.length*100);bar.style.width=p+'%';pg.textContent=arNum(p)+'٪ مكتمل';}
+  ids.forEach(function(i){var c=document.getElementById(i),l=c.closest('.chk');
+    c.checked=localStorage.getItem('dl_'+i)==='1';if(c.checked)l.classList.add('done');
+    c.onchange=function(){localStorage.setItem('dl_'+i,c.checked?'1':'0');l.classList.toggle('done',c.checked);upd();};});
+  upd();
+
+  // scene tabs
+  var caps={box:'🥊 اتنين بيتفاوتوا — ظل وضربات سريعة زي التدريب في البيت.',
+            quran:'📖 قاعد بتراجع صفحة من المصحف بهدوء وتركيز.',
+            work:'💻 شغال على الكود والنشر — سطر ورا سطر.'};
+  document.querySelectorAll('.scene-tabs button').forEach(function(b){
+    b.onclick=function(){
+      document.querySelectorAll('.scene-tabs button').forEach(function(x){x.classList.remove('on');});
+      b.classList.add('on');
+      var s=b.dataset.s;
+      ['box','quran','work'].forEach(function(k){
+        document.getElementById('sc-'+k).style.display=(k===s)?'block':'none';
+      });
+      document.getElementById('anim-cap').textContent=caps[s];
+    };
+  });
+</script>
+</body>
+</html>
